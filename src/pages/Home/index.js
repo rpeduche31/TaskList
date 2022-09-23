@@ -66,6 +66,38 @@ const Home = () => {
     setValue(newValue);
   };
 
+  const handleComplete = list => {
+    const newList = todoList?.map(item => {
+      if (item?.id === list?.id) {
+        return {
+          ...item,
+          status: 'done'
+        };
+      } else {
+        return item;
+      }
+    });
+
+    setTodoList(newList);
+  };
+
+  const handleCancel = list => {
+    const newList = todoList?.map(item => {
+      if (item?.id === list?.id) {
+        return {
+          ...item,
+          status: 'cancelled'
+        };
+      } else {
+        return item;
+      }
+    });
+
+    setTodoList(newList);
+  };
+
+  const onItemClick = () => {};
+
   return (
     <>
       <Modal
@@ -87,6 +119,9 @@ const Home = () => {
 
         <TabPanel value={value} index={0}>
           <ListContent
+            onItemClick={onItemClick}
+            handleComplete={handleComplete}
+            handleCancel={handleCancel}
             listValue={todoList?.filter(list => {
               return list?.status === 'inProgress';
             })}
@@ -94,6 +129,7 @@ const Home = () => {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <ListContent
+            onItemClick={onItemClick}
             listValue={todoList?.filter(list => {
               return list?.status === 'done';
             })}
@@ -101,6 +137,7 @@ const Home = () => {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <ListContent
+            onItemClick={onItemClick}
             listValue={todoList?.filter(list => {
               return list?.status === 'cancelled';
             })}
