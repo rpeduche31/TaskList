@@ -1,14 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-const ButtonContainer = styled.div({
-  //   background: '#2e384d',
-  //   height: '80px',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   padding: '0 35px'
-});
-
 const ButtonComponent = styled('button')(({ disabled }) => ({
   background: disabled ? '#dbe9fd' : '#0b6bf2',
   height: '45px',
@@ -30,9 +22,5 @@ const ButtonComponent = styled('button')(({ disabled }) => ({
 
 export const Button = props => {
   const { children, name } = props;
-  return (
-    <ButtonContainer>
-      <ButtonComponent {...props}>{children ?? name}</ButtonComponent>
-    </ButtonContainer>
-  );
+  return <ButtonComponent {...props}>{children ?? name}</ButtonComponent>;
 };

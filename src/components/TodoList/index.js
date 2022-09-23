@@ -18,10 +18,10 @@ const NewContentContainer = styled('div')(({ status }) => ({
   background: '#e8e8e8',
   marginBottom: '7px',
   borderRadius: '5px',
-  cursor: status === 'done' ? 'pointer' : 'default',
+  cursor: status === 'inProgress' ? 'pointer' : 'default',
   position: 'relative',
   '&:hover': {
-    background: '#cbcaca'
+    background: status === 'inProgress' ? '#cbcaca' : '#e8e8e8'
   }
 }));
 
@@ -62,6 +62,11 @@ export const TodoList = ({ items, onItemClick, handleComplete, handleCancel }) =
     actionType === 'done' ? handleComplete(items) : handleCancel(items);
   };
 
+  const itemClick = e => {
+    e.preventDefault();
+    items?.status === 'inProgress' && onItemClick(items, e);
+  };
+
   return (
     <>
       <ModalConfirm
@@ -71,7 +76,7 @@ export const TodoList = ({ items, onItemClick, handleComplete, handleCancel }) =
         onClose={() => setOpenModalStatus(!modalStatus)}
         handleFunction={handleSubmit}
       />
-      <ContentContainer key={items?.text} status={items?.status}>
+      <ContentContainer key={items?.text} status={items?.status} onClick={itemClick}>
         <NewContentContainer status={items?.status}>
           <ListContainer>{items?.text}</ListContainer>
           {items?.status === 'inProgress' ? (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
@@ -31,7 +32,8 @@ const TabContainer = styled('div')({
 
 const CustomTab = styled(Tab)({
   color: 'gray',
-  fontWeight: '600'
+  fontWeight: '600',
+  display: 'flex'
 });
 
 const CustomTabPanel = styled('div')({
@@ -54,6 +56,7 @@ const TabPanel = props => {
 };
 
 const Home = () => {
+  const navigate = useNavigate();
   const [modalStatus, setModalStatus] = useState(false);
   const [todoList, setTodoList] = useState([]);
   const [value, setValue] = useState(0);
@@ -96,7 +99,23 @@ const Home = () => {
     setTodoList(newList);
   };
 
-  const onItemClick = () => {};
+  const onItemClick = (item, e) => {
+    console.log(navigate, 'history');
+    navigate(`/details/${item?.id}`);
+  };
+
+  const ColorCoding = styled('div')(({ color }) => ({
+    height: '10px',
+    width: '10px',
+    borderRadius: '50%',
+    background: color,
+    marginLeft: '15px'
+  }));
+
+  const ColorCodingContainer = styled('div')(({ color }) => ({
+    display: 'flex',
+    alignItems: 'center'
+  }));
 
   return (
     <>
@@ -111,9 +130,30 @@ const Home = () => {
         </ButtonContainer>
         <TabContainer>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <CustomTab label="In Progress" />
-            <CustomTab label="Done" />
-            <CustomTab label="Cancelled" />
+            <CustomTab
+              label={
+                <ColorCodingContainer>
+                  In Progress
+                  <ColorCoding color="orange" />
+                </ColorCodingContainer>
+              }
+            />
+            <CustomTab
+              label={
+                <ColorCodingContainer>
+                  Done
+                  <ColorCoding color="#1fe21f" />
+                </ColorCodingContainer>
+              }
+            />
+            <CustomTab
+              label={
+                <ColorCodingContainer>
+                  Cancelled
+                  <ColorCoding color="red" />
+                </ColorCodingContainer>
+              }
+            />
           </Tabs>
         </TabContainer>
 

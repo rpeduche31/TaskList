@@ -10,7 +10,7 @@ export const Routes = [
     exact: true
   },
   {
-    path: '/details',
+    path: '/details/:listId',
     name: 'Home',
     key: 'home',
     element: <Details />,
